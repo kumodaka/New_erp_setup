@@ -4,11 +4,11 @@ from dataclasses import dataclass
 
 @dataclass
 class Config:
-    host: str = os.getenv("DB_HOST")
-    port: int = int(os.getenv("DB_PORT", 5432))
-    database: str = os.getenv("DB_NAME")
-    user: str = os.getenv("DB_USER")
-    password: str = os.getenv("DB_PASSWORD")
+    host: str = "erp-project.cry06kecilwo.ap-south-1.rds.amazonaws.com"
+    port: int = 5432
+    database: str = "postgres"
+    user: str = "erpAdmin"
+    password: str = "eALrFJmSciEMCFa"
     # host: str = "localhost"
     # port: int = 5432
     # database: str = "epr"
