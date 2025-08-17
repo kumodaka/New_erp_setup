@@ -13,13 +13,12 @@ enquiry_model = Enquiry()
 @orders_bp.route('/')
 @login_required
 def view_orders():
-    orders_summary = order_model.get_all_orders_summary()
+    # Use the function to only get active orders
+    orders_summary = order_model.get_all_active_orders_summary()
     
     for order in orders_summary:
-        # We get (details, item_list) from the model
+        # This function fetches the items for each order
         _ , item_list = order_model.get_order_details_with_items(order['id'])
-        
-        # Use a non-conflicting key name 'order_items'
         order['order_items'] = item_list
         
     return render_template('order/view_orders.html', orders=orders_summary)
@@ -47,12 +46,10 @@ def create_order():
     customers = customer_model.get_all()
     return render_template('order/create_order.html', customers=customers)
 
-# This is an API endpoint for JavaScript to fetch data
 @orders_bp.route('/api/get-enquiry-items/<int:customer_id>')
 @login_required
 def get_enquiry_items(customer_id):
     items = enquiry_model.get_accepted_enquiries_for_customer(customer_id)
-    # Convert Decimal types to string for safe JSON serialization
     for item in items:
         if 'unit_price' in item:
             item['unit_price'] = str(item['unit_price'])
@@ -64,5 +61,14 @@ def update_item_status(item_id):
     status = request.form.get('status')
     order_model.update_item_status(item_id, status)
     flash(f"Item status updated successfully.", 'success')
-    # Redirect back to the view orders page
+    return redirect(url_for('orders.view_orders'))
+
+@orders_bp.route('/<int:order_id>/delete', methods=['POST'])
+@login_required
+def delete_order(order_id):
+    try:
+        order_model.delete(order_id)
+        flash('Order has been moved to deactivated records.', 'success')
+    except Exception as e:
+        flash(f"Error deactivating order: {e}", 'error')
     return redirect(url_for('orders.view_orders'))

@@ -14,15 +14,23 @@
             <h3>PO Number: {{ order.po_number }}</h3>
             <p><strong>Customer:</strong> {{ order.customer_name }} | <strong>Order Date:</strong> {{ order.order_date.strftime('%Y-%m-%d') }}</p>
         </div>
-        <div>
+        <div style="text-align: right;">
             <p><strong>Total Amount: ₹{{ "%.2f"|format(order.total_amount) }}</strong></p>
             <p><strong>Status:</strong> <span class="status status-{{ order.status }}">{{ order.status }}</span></p>
+            
+            <!-- This is the form for the Delete Button -->
+            <form action="{{ url_for('orders.delete_order', order_id=order.id) }}" method="post" style="margin-top: 5px;">
+                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to deactivate this order?');">
+                    Delete
+                </button>
+            </form>
         </div>
     </div>
     
     <!-- Order Items Table -->
     <div class="table-container" style="margin-top: 15px;">
         <table>
+            <!-- ... thead is the same ... -->
             <thead>
                 <tr>
                     <th>WO Number</th>
@@ -36,7 +44,6 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- This loop now correctly iterates over the list of items attached to the order -->
                 {% for item in order.order_items %}
                 <tr>
                     <td>{{ item.wo_number }}</td>
@@ -52,6 +59,7 @@
                                 <option value="pending" {% if item.status == 'pending' %}selected{% endif %}>Pending</option>
                                 <option value="processing" {% if item.status == 'processing' %}selected{% endif %}>Processing</option>
                                 <option value="completed" {% if item.status == 'completed' %}selected{% endif %}>Completed</option>
+                                <option value="rejected" {% if item.status == 'rejected' %}selected{% endif %}>Rejected</option>
                                 <option value="cancelled" {% if item.status == 'cancelled' %}selected{% endif %}>Cancelled</option>
                             </select>
                             <button type="submit" class="btn btn-primary btn-sm">Update</button>
@@ -64,7 +72,7 @@
     </div>
 </div>
 {% else %}
-<p>No orders found.</p>
+<p>No active orders found.</p>
 {% endfor %}
 
 {% endblock %}

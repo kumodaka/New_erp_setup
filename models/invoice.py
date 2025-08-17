@@ -58,7 +58,7 @@ class Invoice:
         return self.db_helper.execute_statement(sql)
 
     def get_details_by_id(self, invoice_id):
-        invoice_sql = "SELECT i.*, c.name as customer_name, c.address FROM invoices i JOIN customers c ON i.customer_id = c.id WHERE i.id = %s"
+        invoice_sql = "SELECT i.*, c.name as customer_name, c.gst_no, c.address FROM invoices i JOIN customers c ON i.customer_id = c.id WHERE i.id = %s"
         items_sql = """
             SELECT ii.hsn_number, oi.part_number, oi.drawing_number, oi.quantity, oi.unit_price, oi.total_price
             FROM invoice_items ii

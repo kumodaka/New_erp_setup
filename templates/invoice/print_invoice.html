@@ -182,6 +182,7 @@
                 <h3>Detail of Receiver (Billed to):</h3>
                 <p><strong>{{ invoice.customer_name }}</strong></p>
                 <p>{{ invoice.address | replace('\n', '<br>') | safe if invoice.address else 'N/A' }}</p>
+                <p><strong>GSTIN:</strong> {{ invoice.gst_no or 'N/A' }}</p>
             </div>
             <div class="invoice-details">
                 <h3>Invoice Details:</h3>
