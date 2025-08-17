@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-header">
+    <h2>Create New Invoice</h2>
+    <a href="{{ url_for('invoices.view_invoices') }}" class="btn btn-secondary">View All Invoices</a>
+</div>
+<div class="form-container">
+    <form method="post">
+        <!-- Top Section: Customer and Invoice Details -->
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="customer-id-invoice">Customer</label>
+                <select id="customer-id-invoice" name="customer_id" required>
+                    <option value="">-- Select Customer --</option>
+                    {% for customer in customers %}
+                    <option value="{{ customer.id }}">{{ customer.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>PO Number</label>
+                <input type="text" id="po_number" name="po_number" readonly>
+            </div>
+             <div class="form-group">
+                <label for="po_date">PO Date</label>
+                <input type="date" id="po_date" name="po_date">
+            </div>
+            <div class="form-group">
+                <label for="dc_number">DC Number</label>
+                <input type="text" id="dc_number" name="dc_number">
+            </div>
+            <div class="form-group">
+                <label for="dc_date">DC Date</label>
+                <input type="date" id="dc_date" name="dc_date">
+            </div>
+            <div class="form-group">
+                <label for="payment_terms">Payment Terms</label>
+                <select id="payment_terms" name="payment_terms">
+                    <option>Immediate</option>
+                    <option>Within 30 Days</option>
+                    <option>Within 45 Days</option>
+                    <option>Within 60 Days</option>
+                </select>
+            </div>
+        </div>
+        <hr>
+
+        <!-- Middle Section: Available Items to Invoice -->
+        <h4>Available Order Items (Status: Completed)</h4>
+        <div id="completed-items-container">
+            <p>Please select a customer to see available items.</p>
+        </div>
+        <hr>
+
+        <!-- Bottom Section: Selected Invoice Items & Totals -->
+        <h4>Items to be Invoiced</h4>
+        <div class="table-container">
+            <table id="invoice-item-list">
+                <thead>
+                    <tr>
+                        <th>WO Number</th>
+                        <th>Part Number</th>
+                        <th>HSN Number</th>
+                        <th>Qty</th>
+                        <th>Unit Price</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody><!-- JS will populate this --></tbody>
+            </table>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
+            <div style="width: 300px;">
+                <div class="form-group" style="display: flex; justify-content: space-between; align-items: center;">
+                    <label>Sub Total:</label>
+                    <span id="sub_total_display">₹0.00</span>
+                    <input type="hidden" id="sub_total_hidden" name="sub_total" value="0.00">
+                </div>
+                <div class="form-group" style="display: flex; justify-content: space-between; align-items: center;">
+                    <label for="gst_rate">GST (%):</label>
+                    <select id="gst_rate" name="gst_rate" style="width: 100px;">
+                        <option value="18">18%</option>
+                        <option value="12">12%</option>
+                    </select>
+                </div>
+                <div class="form-group" style="display: flex; justify-content: space-between; align-items: center;">
+                    <label>GST Amount:</label>
+                    <span id="gst_amount_display">₹0.00</span>
+                </div>
+                <hr>
+                <div class="form-group" style="display: flex; justify-content: space-between; align-items: center; font-weight: bold; font-size: 1.2em;">
+                    <label>Total Amount:</label>
+                    <span id="total_amount_display">₹0.00</span>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Generate Invoice</button>
+    </form>
+</div>
+{% endblock %}

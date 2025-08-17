@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-header">
+    <h2>Create New Order</h2>
+    <a href="{{ url_for('orders.view_orders') }}" class="btn btn-secondary">View All Orders</a>
+</div>
+<div class="form-container">
+    <form method="post">
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="customer-id-order">Customer</label>
+                <select id="customer-id-order" name="customer_id" required>
+                    <option value="">-- Select Customer --</option>
+                    {% for customer in customers %}
+                    <option value="{{ customer.id }}">{{ customer.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="po_number">PO Number</label>
+                <input type="text" id="po_number" name="po_number" required>
+            </div>
+        </div>
+        <hr>
+        <h4>Available Enquiry Items (Status: Accepted)</h4>
+        <div id="enquiry-items-container">
+            <p>Please select a customer to see available items.</p>
+        </div>
+        <hr>
+        <h4>Selected Items for this Order</h4>
+        <div class="table-container">
+            <table id="selected-items-table">
+                <thead>
+                    <tr>
+                        <th>Part Number</th>
+                        <th>Drawing No</th>
+                        <th>Qty</th>
+                        <th>Unit Price</th>
+                        <th>Total Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Selected items will be populated by JS -->
+                </tbody>
+            </table>
+        </div>
+        <h3 style="text-align: right;">Total Order Amount: <span id="total-order-amount">₹0.00</span></h3>
+        <button type="submit" class="btn btn-primary">Create Order</button>
+    </form>
+</div>
+{% endblock %}
+``````html

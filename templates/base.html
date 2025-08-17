@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWN Manufacturing ERP</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <!-- Place your logo in static/images/logo.png -->
+            <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo"></a>
+            <h1>Aero Wave ERP</h1>
+        </div>
+        <nav>
+            {% if 'user_id' in session %}
+                <a href="{{ url_for('index') }}">Dashboard</a>
+                <a href="{{ url_for('customers.view_customers') }}">Customers</a>
+                <a href="{{ url_for('enquiries.view_enquiries') }}">Enquiries</a>
+                <a href="{{ url_for('orders.view_orders') }}">Orders</a>
+                <a href="{{ url_for('invoices.view_invoices') }}">Invoices</a>
+                <a href="{{ url_for('deleted.deleted_info_page') }}">Deactivated Records</a>
+                <a href="{{ url_for('auth.logout') }}">Logout</a>
+            {% endif %}
+        </nav>
+    </header>
+    <main class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        &copy; 2025 AWN Manufacturing. All Rights Reserved.
+    </footer>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

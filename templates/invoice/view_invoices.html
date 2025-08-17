@@ -1,0 +1,38 @@
+<!-- templates/invoice/view_invoices.html -->
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-header">
+    <h2>Invoices List</h2>
+    <a href="{{ url_for('invoices.create_invoice') }}" class="btn btn-primary">Create New Invoice</a>
+</div>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Invoice No</th>
+                <th>Customer</th>
+                <th>Total Amount</th>
+                <th>Payment Terms</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for invoice in invoices %}
+            <tr>
+                <td>{{ invoice.invoice_number }}</td>
+                <td>{{ invoice.customer_name }}</td>
+                <td>₹{{ "%.2f"|format(invoice.total_amount) }}</td>
+                <td>{{ invoice.payment_terms }}</td>
+                <td>{{ invoice.created_at.strftime('%Y-%m-%d') }}</td>
+                <td class="actions">
+                    <a href="{{ url_for('invoices.print_invoice', invoice_id=invoice.id) }}" class="btn btn-secondary btn-sm">View/Print</a>
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="6">No invoices found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

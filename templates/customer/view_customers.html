@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-header">
+    <h2>Customers List</h2>
+    <a href="{{ url_for('customers.add_customer') }}" class="btn btn-primary">Add New Customer</a>
+</div>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Unique No</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>GST No</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer in customers %}
+            <tr>
+                <td>{{ customer.unique_no }}</td>
+                <td>{{ customer.name }}</td>
+                <td>{{ customer.phone_number }}</td>
+                <td>{{ customer.gst_no }}</td>
+                <td class="actions">
+                    <a href="{{ url_for('customers.edit_customer', customer_id=customer.id) }}" class="btn btn-secondary btn-sm">Edit</a>
+                    <a href="{{ url_for('customers.delete_customer', customer_id=customer.id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to deactivate this customer?');">Delete</a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5">No customers found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
