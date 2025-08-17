@@ -1,0 +1,70 @@
+<!-- templates/order/view_orders.html -->
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-header">
+    <h2>Orders List</h2>
+    <a href="{{ url_for('orders.create_order') }}" class="btn btn-primary">Create New Order</a>
+</div>
+
+{% for order in orders %}
+<div class="form-container" style="margin-bottom: 20px;">
+    <!-- Order Summary Header -->
+    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <div>
+            <h3>PO Number: {{ order.po_number }}</h3>
+            <p><strong>Customer:</strong> {{ order.customer_name }} | <strong>Order Date:</strong> {{ order.order_date.strftime('%Y-%m-%d') }}</p>
+        </div>
+        <div>
+            <p><strong>Total Amount: ₹{{ "%.2f"|format(order.total_amount) }}</strong></p>
+            <p><strong>Status:</strong> <span class="status status-{{ order.status }}">{{ order.status }}</span></p>
+        </div>
+    </div>
+    
+    <!-- Order Items Table -->
+    <div class="table-container" style="margin-top: 15px;">
+        <table>
+            <thead>
+                <tr>
+                    <th>WO Number</th>
+                    <th>Part Number</th>
+                    <th>Drawing Number</th>
+                    <th>Qty</th>
+                    <th>Unit Price</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- This loop now correctly iterates over the list of items attached to the order -->
+                {% for item in order.order_items %}
+                <tr>
+                    <td>{{ item.wo_number }}</td>
+                    <td>{{ item.part_number }}</td>
+                    <td>{{ item.drawing_number }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>₹{{ "%.2f"|format(item.unit_price) }}</td>
+                    <td>₹{{ "%.2f"|format(item.total_price) }}</td>
+                    <td><span class="status status-{{ item.status }}">{{ item.status }}</span></td>
+                    <td>
+                        <form action="{{ url_for('orders.update_item_status', item_id=item.id) }}" method="post" style="display: flex; gap: 5px;">
+                            <select name="status" class="form-group" style="padding: 4px; margin: 0;">
+                                <option value="pending" {% if item.status == 'pending' %}selected{% endif %}>Pending</option>
+                                <option value="processing" {% if item.status == 'processing' %}selected{% endif %}>Processing</option>
+                                <option value="completed" {% if item.status == 'completed' %}selected{% endif %}>Completed</option>
+                                <option value="cancelled" {% if item.status == 'cancelled' %}selected{% endif %}>Cancelled</option>
+                            </select>
+                            <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% else %}
+<p>No orders found.</p>
+{% endfor %}
+
+{% endblock %}

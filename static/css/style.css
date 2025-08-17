@@ -1,0 +1,354 @@
+/* static/css/style.css */
+
+/* General Body & Typography */
+:root {
+    --primary-color: rgba(187, 11, 11, 0.95);
+    --primary-text-color: #fff;
+    --background-color: #f4f5f7;
+    --card-bg-color: #ffffff;
+    --font-color: #333;
+    --border-color: #ddd;
+    --success-bg: #dff0d8;
+    --success-text: #3c763d;
+    --error-bg: #f2dede;
+    --error-text: #a94442;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: var(--background-color);
+    color: var(--font-color);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+h1,
+h2,
+h3 {
+    color: var(--font-color);
+    font-weight: 600;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.container {
+    width: 95%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header & Navigation */
+header {
+    background-color: var(--primary-color);
+    color: var(--primary-text-color);
+    padding: 10px 2.5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header .logo {
+    display: flex;
+    align-items: center;
+}
+
+header .logo img {
+    height: 40px;
+    margin-right: 15px;
+}
+
+header .logo h1 {
+    color: var(--primary-text-color);
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+header nav a {
+    color: var(--primary-text-color);
+    margin: 0 15px;
+    font-weight: 500;
+    transition: opacity 0.2s;
+}
+
+header nav a:hover {
+    opacity: 0.8;
+    text-decoration: none;
+}
+
+/* Main Content & Footer */
+main {
+    flex: 1;
+}
+
+footer {
+    text-align: center;
+    padding: 15px;
+    background: #e9ecef;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+/* Forms */
+.form-container {
+    background: var(--card-bg-color);
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    box-sizing: border-box;
+    /* Important for consistent sizing */
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+/* Buttons */
+.btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    display: inline-block;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--primary-text-color);
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: var(--primary-text-color);
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: var(--primary-text-color);
+}
+
+.btn-sm {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Tables */
+.table-container {
+    overflow-x: auto;
+    background: var(--card-bg-color);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+.actions a,
+.actions button {
+    margin-right: 5px;
+}
+
+.status {
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    font-weight: bold;
+    color: #fff;
+    text-transform: capitalize;
+}
+
+.status-pending {
+    background-color: #ffc107;
+    color: #333;
+}
+
+.status-accepted,
+.status-completed {
+    background-color: #28a745;
+}
+
+.status-rejected,
+.status-cancelled {
+    background-color: #dc3545;
+}
+
+.status-processing {
+    background-color: #17a2b8;
+}
+
+
+/* Flash Messages */
+.flash-messages {
+    margin-bottom: 15px;
+}
+
+.alert {
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.alert-success {
+    background-color: var(--success-bg);
+    color: var(--success-text);
+}
+
+.alert-error {
+    background-color: var(--error-bg);
+    color: var(--error-text);
+}
+
+/* Authentication Forms */
+.auth-form {
+    max-width: 400px;
+    margin: 40px auto;
+}
+
+/* Dashboard */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: var(--card-bg-color);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Item Forms (Enquiry, Order, Invoice) */
+.item-entry,
+.item-details {
+    background: #f9f9f9;
+    border: 1px solid #e9e9e9;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+.item-entry h4,
+.item-details h4 {
+    margin-top: 0;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+#item-list,
+#selected-items-table tbody,
+#invoice-item-list tbody {
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 10px;
+    min-height: 50px;
+    background: #fafafa;
+}
+
+/* Print Invoice */
+@media print {
+
+    body,
+    header,
+    footer {
+        visibility: hidden;
+    }
+
+    .invoice-print-area,
+    .invoice-print-area * {
+        visibility: visible;
+    }
+
+    .invoice-print-area {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+
+    .no-print {
+        display: none;
+    }
+}
+
+.invoice-box {
+    max-width: 800px;
+    margin: auto;
+    padding: 30px;
+    border: 1px solid #eee;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    font-size: 16px;
+    line-height: 24px;
+    font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+    color: #555;
+    background: #fff;
+}

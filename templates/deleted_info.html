@@ -1,0 +1,101 @@
+<!-- templates/deleted_info.html -->
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-header">
+    <h2>Deactivated Records</h2>
+</div>
+
+<!-- Deactivated Customers -->
+<div class="form-container" style="margin-bottom: 20px;">
+    <h3>Deactivated Customers</h3>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Unique No</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Deactivated On</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for customer in customers %}
+                <tr>
+                    <td>{{ customer.unique_no }}</td>
+                    <td>{{ customer.name }}</td>
+                    <td>{{ customer.phone_number }}</td>
+                    <td>{{ customer.deactivated_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4">No deactivated customers found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Deactivated Enquiries -->
+<div class="form-container" style="margin-bottom: 20px;">
+    <h3>Deactivated Enquiries</h3>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Enquiry No</th>
+                    <th>Customer</th>
+                    <th>Status</th>
+                    <th>Deactivated On</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for enquiry in enquiries %}
+                <tr>
+                    <td>{{ enquiry.enq_number }}</td>
+                    <td>{{ enquiry.customer_name or 'N/A' }}</td>
+                    <td><span class="status status-{{ enquiry.status }}">{{ enquiry.status }}</span></td>
+                    <td>{{ enquiry.deactivated_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4">No deactivated enquiries found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Deactivated Orders -->
+<div class="form-container">
+    <h3>Deactivated Orders</h3>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>PO Number</th>
+                    <th>Customer</th>
+                    <th>Status</th>
+                    <th>Deactivated On</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.po_number }}</td>
+                    <td>{{ order.customer_name or 'N/A' }}</td>
+                    <td><span class="status status-{{ order.status }}">{{ order.status }}</span></td>
+                    <td>{{ order.deactivated_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4">No deactivated orders found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

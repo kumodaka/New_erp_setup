@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-header">
+    <h2>Create New Enquiry</h2>
+    <a href="{{ url_for('enquiries.view_enquiries') }}" class="btn btn-secondary">View All Enquiries</a>
+</div>
+<div class="form-container">
+    <form method="post">
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="customer_id">Customer</label>
+                <select id="customer_id" name="customer_id" required>
+                    <option value="">-- Select Customer --</option>
+                    {% for customer in customers %}
+                    <option value="{{ customer.id }}">{{ customer.name }} ({{ customer.unique_no }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="enq_number">Enquiry Number</label>
+                <input type="text" id="enq_number" name="enq_number" required>
+            </div>
+        </div>
+        <hr>
+        <h3>Enquiry Items</h3>
+        <div id="item-list">
+            <!-- First item entry -->
+            <div class="item-entry">
+                <h4>Item 1</h4>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Drawing Number</label>
+                        <input type="text" name="drawing_number[]" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Part Number</label>
+                        <input type="text" name="part_number[]" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Part Revision Number</label>
+                        <input type="text" name="part_revision_number[]">
+                    </div>
+                    <div class="form-group">
+                        <label>Material Type</label>
+                        <input type="text" name="material_type[]" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Material Specification</label>
+                        <input type="text" name="material_specification[]">
+                    </div>
+                    <div class="form-group">
+                        <label>With Material</label>
+                        <select name="with_material[]">
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Unit Price (₹)</label>
+                        <input type="number" name="unit_price[]" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Quantity</label>
+                        <input type="number" name="quantity[]" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Remarks</label>
+                    <textarea name="remarks[]" rows="2"></textarea>
+                </div>
+            </div>
+        </div>
+        <button type="button" id="add-item-btn" class="btn btn-secondary" style="margin-top: 15px;">Add Another Item</button>
+        <hr>
+        <button type="submit" class="btn btn-primary">Create Enquiry</button>
+    </form>
+</div>
+{% endblock %}

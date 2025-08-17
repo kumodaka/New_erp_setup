@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="dashboard">
+    <h2>Welcome, {{ session.username }}!</h2>
+    <p>This is the main dashboard for the AWN Manufacturing ERP system. Use the navigation bar to manage different aspects of the business.</p>
+    <div class="dashboard-grid">
+        <a href="{{ url_for('customers.add_customer') }}" class="card">
+            <h3>Add Customer</h3>
+            <p>Register a new customer in the system.</p>
+        </a>
+        <a href="{{ url_for('enquiries.create_enquiry') }}" class="card">
+            <h3>Create Enquiry</h3>
+            <p>Log a new customer enquiry for parts.</p>
+        </a>
+        <a href="{{ url_for('orders.create_order') }}" class="card">
+            <h3>Create Order</h3>
+            <p>Convert an accepted enquiry into a production order.</p>
+        </a>
+        <a href="{{ url_for('invoices.create_invoice') }}" class="card">
+            <h3>Create Invoice</h3>
+            <p>Generate an invoice for completed work orders.</p>
+        </a>
+    </div>
+</div>
+{% endblock %}
