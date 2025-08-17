@@ -19,11 +19,13 @@ def deleted_info_page():
     deactivated_customers = customer_model.get_deactivated()
     deactivated_enquiries = enquiry_model.get_deactivated()
     deactivated_orders = order_model.get_deactivated()
+    rejected_items = order_model.get_cancelled_or_rejected_items()
 
     # Pass the lists of deactivated items to the template
     return render_template(
         'deleted_info.html',
         customers=deactivated_customers,
         enquiries=deactivated_enquiries,
-        orders=deactivated_orders
+        orders=deactivated_orders,
+        rejected_items=rejected_items
     )

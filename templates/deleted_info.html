@@ -8,6 +8,7 @@
 <!-- Deactivated Customers -->
 <div class="form-container" style="margin-bottom: 20px;">
     <h3>Deactivated Customers</h3>
+    <!-- ... (table for customers remains the same) ... -->
     <div class="table-container">
         <table>
             <thead>
@@ -39,6 +40,7 @@
 <!-- Deactivated Enquiries -->
 <div class="form-container" style="margin-bottom: 20px;">
     <h3>Deactivated Enquiries</h3>
+    <!-- ... (table for enquiries remains the same) ... -->
     <div class="table-container">
         <table>
             <thead>
@@ -67,9 +69,10 @@
     </div>
 </div>
 
-<!-- Deactivated Orders -->
-<div class="form-container">
-    <h3>Deactivated Orders</h3>
+<!-- Deactivated and Cancelled Orders -->
+<div class="form-container" style="margin-bottom: 20px;">
+    <h3>Deactivated & Cancelled Orders</h3>
+    <!-- ... (table for orders remains the same) ... -->
     <div class="table-container">
         <table>
             <thead>
@@ -86,16 +89,51 @@
                     <td>{{ order.po_number }}</td>
                     <td>{{ order.customer_name or 'N/A' }}</td>
                     <td><span class="status status-{{ order.status }}">{{ order.status }}</span></td>
-                    <td>{{ order.deactivated_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                    <td>{{ order.deactivated_at.strftime('%Y-%m-%d %H:%M') if order.deactivated_at else 'N/A (Status Driven)' }}</td>
                 </tr>
                 {% else %}
                 <tr>
-                    <td colspan="4">No deactivated orders found.</td>
+                    <td colspan="4">No deactivated or cancelled orders found.</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
+
+<!-- V V V ADD THIS ENTIRE NEW SECTION V V V -->
+<!-- Rejected or Cancelled Items from Active Orders -->
+<div class="form-container">
+    <h3>Rejected & Cancelled Items (from Active Orders)</h3>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>WO Number</th>
+                    <th>Part Number</th>
+                    <th>Customer</th>
+                    <th>Parent PO</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in rejected_items %}
+                <tr>
+                    <td>{{ item.wo_number }}</td>
+                    <td>{{ item.part_number }}</td>
+                    <td>{{ item.customer_name }}</td>
+                    <td>{{ item.po_number }}</td>
+                    <td><span class="status status-{{ item.status }}">{{ item.status }}</span></td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5">No rejected or cancelled items found in active orders.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- ^ ^ ^ END OF NEW SECTION ^ ^ ^ -->
 
 {% endblock %}

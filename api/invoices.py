@@ -60,14 +60,27 @@ def create_invoice():
     customers = customer_model.get_all()
     return render_template('invoice/create_invoice.html', customers=customers)
 
+# In api/invoices.py
+
 @invoices_bp.route('/<int:invoice_id>')
 @login_required
 def print_invoice(invoice_id):
+    # Check for the 'type' query parameter in the URL (e.g., ?type=dummy)
+    invoice_type = request.args.get('type', 'original').lower()
+
+    # Set the title based on the type
+    if invoice_type == 'dummy':
+        title = "Dummy Invoice"
+    else:
+        title = "Tax Invoice" # The official title for an original
+
     invoice, items = invoice_model.get_details_by_id(invoice_id)
     if not invoice:
         flash('Invoice not found.', 'error')
         return redirect(url_for('invoices.view_invoices'))
-    return render_template('invoice/print_invoice.html', invoice=invoice, items=items)
+        
+    # Pass the new 'title' variable to the template
+    return render_template('invoice/print_invoice.html', invoice=invoice, items=items, invoice_title=title)
 
 # API endpoint for JavaScript
 @invoices_bp.route('/api/get-completed-items/<int:customer_id>')

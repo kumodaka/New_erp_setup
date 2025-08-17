@@ -18,6 +18,7 @@
             </tr>
         </thead>
         <tbody>
+            <!-- The loop starts here, creating the 'invoice' variable for each row -->
             {% for invoice in invoices %}
             <tr>
                 <td>{{ invoice.invoice_number }}</td>
@@ -26,12 +27,17 @@
                 <td>{{ invoice.payment_terms }}</td>
                 <td>{{ invoice.created_at.strftime('%Y-%m-%d') }}</td>
                 <td class="actions">
-                    <a href="{{ url_for('invoices.print_invoice', invoice_id=invoice.id) }}" class="btn btn-secondary btn-sm">View/Print</a>
+                    <!-- These links are now correctly INSIDE the loop -->
+                    <a href="{{ url_for('invoices.print_invoice', invoice_id=invoice.id) }}" class="btn btn-secondary btn-sm">Original</a>
+                    <a href="{{ url_for('invoices.print_invoice', invoice_id=invoice.id, type='dummy') }}" class="btn btn-secondary btn-sm" style="background-color: #6c757d;">Dummy</a>
                 </td>
             </tr>
             {% else %}
-            <tr><td colspan="6">No invoices found.</td></tr>
+            <tr>
+                <td colspan="6">No invoices found.</td>
+            </tr>
             {% endfor %}
+            <!-- The loop ends here. The 'invoice' variable is no longer accessible after this point -->
         </tbody>
     </table>
 </div>
