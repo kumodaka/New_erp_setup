@@ -1,8 +1,7 @@
-<!-- templates/invoice/print_invoice.html -->
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Invoice - {{ invoice.invoice_number }}</title>
+    <title>{{ invoice_title }} - {{ invoice.invoice_number }}</title>
     <style>
         * {
             margin: 0;
@@ -17,19 +16,13 @@
             height: 60px;
             margin-right: 15px;
         }
-        .logo-container {
-            text-align: center;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
         .invoice-container {
             max-width: 800px;
             margin: 15px auto;
             padding: 25px;
             box-shadow: 0 0 15px rgba(0,0,0,0.1);
             background: #fff;
+            border: 1px solid #ddd;
         }
         .company-header {
             text-align: center;
@@ -59,6 +52,7 @@
         .client-details, .invoice-details {
             padding: 12px;
             background: #f8f8f8;
+            border: 1px solid #eee;
             border-radius: 4px;
             font-size: 13px;
         }
@@ -66,6 +60,8 @@
             color: #bb0b0b;
             margin-bottom: 8px;
             font-size: 16px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
         }
         .invoice-details table {
             width: 100%;
@@ -128,9 +124,9 @@
         }
         .signatures {
             margin-top: 40px;
+            padding-top: 20px;
             display: flex;
             justify-content: space-between;
-            padding: 10px 10px 0 10px;
             font-size: 13px;
             font-weight: bold;
         }
@@ -142,17 +138,17 @@
             border-radius: 4px;
             cursor: pointer;
             font-size: 13px;
-            margin-top: 15px;
             transition: background 0.3s ease;
             text-decoration: none;
             display: inline-block;
         }
-        .page-header {
+        .page-controls {
             display: flex;
             justify-content: space-between;
             align-items: center;
             max-width: 800px;
             margin: 15px auto 0 auto;
+            padding: 0 10px;
         }
         @media print {
             .no-print { display: none; }
@@ -162,7 +158,7 @@
     </style>
 </head>
 <body>
-    <div class="page-header no-print">
+    <div class="page-controls no-print">
         <a href="{{ url_for('invoices.view_invoices') }}" class="btn">&larr; Back to Invoices</a>
         <button class="btn" onclick="window.print()">Print Invoice</button>
     </div>
@@ -172,6 +168,7 @@
              <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Company Logo" class="logo">
             <!-- ### TODO: Replace with your actual company details ### -->
             <h1>AWN MANUFACTURING</h1>
+            <h3 style="margin-top: 10px; font-weight: bold; color: #333;">{{ invoice_title }}</h3>
             <p>123 Industrial Way, Manufacturing City, 54321</p>
             <p>GST NO: YOUR_GST_NUMBER_HERE</p>
             <p>EMAIL: your.email@example.com</p>
@@ -187,6 +184,9 @@
             <div class="invoice-details">
                 <h3>Invoice Details:</h3>
                 <table>
+                     <tr>
+                        <td colspan="2" style="text-align: right; font-weight: bold; color: #bb0b0b; padding-bottom: 5px;">{{ invoice_title }}</td>
+                    </tr>
                     <tr>
                         <td><strong>INV No:</strong></td>
                         <td>{{ invoice.invoice_number }}</td>
@@ -230,7 +230,7 @@
                 {% for item in items %}
                 <tr>
                     <td>{{ loop.index }}</td>
-                    <td>{{ item.part_number }} ({{ item.drawing_number }})</td>
+                    <td>{{ item.part_number }} (Dwg: {{ item.drawing_number }})</td>
                     <td>{{ item.hsn_number or 'N/A' }}</td>
                     <td>₹{{ "%.2f"|format(item.unit_price) }}</td>
                     <td>{{ item.quantity }}</td>
@@ -280,7 +280,6 @@
                 <div>For AWN MANUFACTURING</div>
             </div>
         </div>
-
     </div>
 </body>
 </html>
