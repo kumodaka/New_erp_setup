@@ -2,3 +2,5 @@ Flask
 psycopg2-binary
 werkzeug
 boto3==1.40.11
+Flask-SocketIO
+eventlet
