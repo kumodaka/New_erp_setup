@@ -4,11 +4,11 @@ from dataclasses import dataclass
 
 @dataclass
 class Config:
-    host: str = "erp-project.cry06kecilwo.ap-south-1.rds.amazonaws.com"
-    port: int = 5432
-    database: str = "postgres"
-    user: str = "erpAdmin"
-    password: str = "eALrFJmSciEMCFa"
+    host: str = "kumodak-db-kumodaka.k.aivencloud.com"
+    port: int = 21498
+    database: str = "defaultdb"
+    user: str = "avnadmin"
+    password: str = "AVNS_GwCqNuobXPANnp-_-Hc"
     # host: str = "localhost"
     # port: int = 5432
     # database: str = "epr"
