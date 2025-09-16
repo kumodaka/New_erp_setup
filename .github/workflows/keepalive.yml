@@ -2,8 +2,8 @@ name: Keep Render Alive
 
 on:
   schedule:
-    - cron: "*/12 * * * *"  
-  workflow_dispatch:          
+    - cron: "*/12 * * * *"   # runs every 12 minutes
+  workflow_dispatch:
 
 jobs:
   ping:
@@ -11,4 +11,4 @@ jobs:
     steps:
       - name: Ping websocket endpoint
         run: |
-          curl -s -N https://kumodaka-project-order-service.onrender.com/socket.io/?EIO=4&transport=polling > /dev/null || true
+          curl -s -N "https://kumodaka-project-order-service.onrender.com/socket.io/?EIO=4&transport=polling" > /dev/null || true
